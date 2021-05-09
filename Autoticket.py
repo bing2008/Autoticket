@@ -136,6 +136,15 @@ class Concert(object):
             
     def choose_ticket_1(self):  # for type 1, i.e., detail.damai.cn
         self.time_start = time()
+        print("###点击实名制弹窗-bing added ###")
+        realName = WebDriverWait(self.driver, self.total_wait_time, self.refresh_wait_time).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, "realname-popup")))
+        if realName:
+            print("popup find!")
+            okButton = realName.find_elements_by_class_name("button") # 找到能选择的日期
+            okButton[1].click()
+            sleep(self.intersect_wait_time)
+
         print("###开始进行日期及票价选择###")
 
         while self.driver.title.find('确认订单') == -1:  # 如果跳转到了确认界面就算这步成功了，否则继续执行此步
